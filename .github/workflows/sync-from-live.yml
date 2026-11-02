@@ -1,0 +1,61 @@
+name: 从线上同步前端文件
+
+# 本机没有 GH_TOKEN，本地推送不通，改为由 runner 从线上站点反拉前端文件并提交。
+# 触发：手动运行，或本文件被修改时自动跑一次。
+
+on:
+  workflow_dispatch: {}
+  push:
+    paths:
+      - '.github/workflows/sync-from-live.yml'
+
+env:
+  TZ: Asia/Shanghai
+  LIVE: https://93e14aa60a70466f9fe608234a38925e.app.workbuddy.host
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 拉取线上前端文件
+        run: |
+          set -e
+          for f in index.html word-quiz.html service-worker.js; do
+            curl -fsSL "$LIVE/$f?t=$(date +%s)" -o "$f"
+            echo "synced $f $(wc -c < "$f") bytes"
+          done
+          grep -q "单词闯关" index.html && echo "index.html 校验通过"
+          grep -q "opc-v" service-worker.js && echo "service-worker.js 校验通过"
+
+      - name: 提交变更
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          touch .nojekyll
+          git add -A
+          git diff --staged --quiet || git commit -m "从线上同步前端文件 $(date '+%Y-%m-%d %H:%M')"
+          git push
+
+      - name: 配置 Pages
+        uses: actions/configure-pages@v5
+
+      - name: 上传站点文件
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

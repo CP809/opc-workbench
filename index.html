@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="description" content="一人公司工作台 · AI/计算机情报 + 日程 + 打卡">
+<title>一人公司工作台</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue-700:#1d4ed8; --blue-600:#2563eb; --blue-500:#3b82f6; --blue-400:#60a5fa;
+  --blue-100:#dbeafe; --blue-50:#eff6ff;
+  --cyan:#06b6d4; --cyan-50:#ecfeff;
+  --ink:#0f172a; --ink-2:#475569; --ink-3:#94a3b8;
+  --line:#e6ecf5; --bg:#f4f7fd; --card:#fff;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(15,23,42,.04),0 6px 20px rgba(15,23,42,.05);
+}
+html,body{height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--ink);
+  -webkit-font-smoothing:antialiased; font-size:15px; line-height:1.6;
+}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- 布局 ---------- */
+.app{display:flex;height:100dvh;overflow:hidden}
+.sidebar{
+  width:212px;flex-shrink:0;background:#fff;border-right:1px solid var(--line);
+  padding:20px 12px calc(12px + env(safe-area-inset-bottom,0px));
+  display:flex;flex-direction:column;gap:4px;
+}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 14px}
+.brand-logo{
+  width:38px;height:38px;border-radius:11px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue-500),var(--blue-700));
+  display:grid;place-items:center;font-size:19px;
+  box-shadow:0 4px 12px rgba(37,99,235,.25);
+}
+.brand-name{font-size:15px;font-weight:700;letter-spacing:.2px}
+.brand-sub{font-size:10.5px;color:var(--ink-3);letter-spacing:.6px}
+.side-date{font-size:12px;color:var(--ink-2);padding:0 8px 10px}
+.nav-label{font-size:11px;color:var(--ink-3);font-weight:600;letter-spacing:1px;padding:10px 10px 4px}
+.nav-item{
+  display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;
+  cursor:pointer;color:var(--ink-2);font-size:14px;transition:.16s;user-select:none;
+}
+.nav-item:hover{background:var(--blue-50);color:var(--blue-700)}
+.nav-item.active{background:var(--blue-600);color:#fff;font-weight:600;box-shadow:0 3px 10px rgba(37,99,235,.28)}
+.nav-item .ico{font-size:16px;width:20px;text-align:center}
+.nav-item .txt{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-item .badge{font-size:11px;background:var(--blue-50);color:var(--blue-700);padding:1px 7px;border-radius:20px;font-weight:600}
+.nav-item.active .badge{background:rgba(255,255,255,.22);color:#fff}
+.sidebar-footer{margin-top:auto;font-size:11px;color:var(--ink-3);padding:10px 8px 0;border-top:1px solid var(--line)}
+
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{
+  height:66px;flex-shrink:0;background:rgba(255,255,255,.92);backdrop-filter:blur(14px) saturate(180%);
+  border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;gap:12px;
+}
+.tb-left{display:flex;flex-direction:column;gap:3px;min-width:0}
+.topbar h1{font-size:18px;font-weight:700;letter-spacing:.3px;line-height:1.15}
+.tb-sub{
+  font-size:11.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-variant-numeric:tabular-nums;
+}
+.icon-btn{
+  width:38px;height:38px;flex-shrink:0;border-radius:12px;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;transition:.2s;
+  border:1px solid var(--line);background:#fff;color:var(--blue-600);
+}
+.icon-btn:hover{background:var(--blue-50);border-color:var(--blue-400);color:var(--blue-700)}
+.icon-btn:active{transform:scale(.92)}
+.icon-btn.spin svg{animation:spin .8s ease}
+@keyframes spin{to{transform:rotate(360deg)}}
+.meta{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3)}
+.btn{
+  border:1px solid var(--line);background:#fff;color:var(--ink-2);
+  padding:6px 12px;border-radius:9px;font-size:12.5px;cursor:pointer;transition:.16s;white-space:nowrap;
+}
+.btn:hover{border-color:var(--blue-400);color:var(--blue-600);background:var(--blue-50)}
+.btn-primary{background:var(--blue-600);border-color:var(--blue-600);color:#fff}
+.btn-primary:hover{background:var(--blue-700);color:#fff}
+
+.content{flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch}
+.view{display:none;animation:fadeUp .28s ease}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- 通用卡片 ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+.card-title{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.card-title .hint{font-weight:400;font-size:11.5px;color:var(--ink-3)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+.section-head-title{
+  font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:10px;
+  display:flex;align-items:center;gap:7px;
+}
+
+/* ---------- 资讯 ---------- */
+.news-list{display:flex;flex-direction:column;gap:9px}
+.news-item{
+  display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:12px 14px;transition:.16s;
+}
+.news-item:hover{border-color:var(--blue-400);transform:translateY(-1px);box-shadow:0 6px 18px rgba(37,99,235,.1)}
+.news-top{display:flex;align-items:flex-start;gap:8px}
+.news-title{font-size:14px;font-weight:600;line-height:1.5}
+.news-summary{font-size:12.5px;color:var(--ink-2);margin-top:5px;line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.news-meta{display:flex;gap:10px;font-size:11.5px;color:var(--ink-3);margin-top:8px;align-items:center}
+.tag{font-size:10.5px;padding:2px 7px;border-radius:6px;font-weight:700;flex-shrink:0;margin-top:2px}
+.tag-ai{background:var(--blue-100);color:var(--blue-700)}
+.tag-tech{background:#cffafe;color:#0e7490}
+.tag-hot{background:#fff1f2;color:#be123c}
+.tag-base{background:#f1f5f9;color:#475569}
+.src-badge{background:var(--blue-50);color:var(--blue-600);padding:1px 7px;border-radius:6px;font-weight:600}
+.empty{text-align:center;color:var(--ink-3);padding:40px 10px;font-size:13px}
+.empty .big{font-size:34px;margin-bottom:8px}
+
+/* ---------- 打卡 ---------- */
+.checkin-wrap{max-width:640px;margin:0 auto}
+.hero-card{text-align:center;padding:22px 18px}
+.ring{
+  width:158px;height:158px;margin:0 auto 16px;border-radius:50%;position:relative;
+  background:conic-gradient(var(--ring-c,var(--blue-500)) var(--pct,0%), var(--blue-50) 0);
+  display:grid;place-items:center;transition:background .5s ease;
+}
+.ring-inner{
+  width:126px;height:126px;border-radius:50%;background:#fff;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:inset 0 0 0 1px var(--line);
+}
+.ring-num{font-size:38px;font-weight:800;letter-spacing:-1px;color:var(--ink);line-height:1}
+.ring-unit{font-size:11.5px;color:var(--ink-3);margin-top:5px}
+.btn-main{
+  width:100%;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;
+  color:#fff;cursor:pointer;transition:.16s;font-family:inherit;
+}
+.btn-word{background:linear-gradient(135deg,var(--blue-500),var(--blue-700));box-shadow:0 6px 18px rgba(37,99,235,.3)}
+.btn-water{background:linear-gradient(135deg,#22d3ee,var(--cyan));box-shadow:0 6px 18px rgba(6,182,212,.28)}
+.btn-main:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.btn-main:active{transform:scale(.99)}
+.quick-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.quick-chip{
+  border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:9px;
+  padding:8px 13px;font-size:13px;cursor:pointer;transition:.16s;font-family:inherit;
+}
+.quick-chip:hover{border-color:var(--blue-400);color:var(--blue-600);background:var(--blue-50)}
+.input-row{display:flex;gap:8px;margin-top:12px;justify-content:center}
+.input-row input{
+  width:110px;border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-size:14px;
+  font-family:inherit;color:var(--ink);text-align:center;outline:none;transition:.16s;
+}
+.input-row input:focus{border-color:var(--blue-500);box-shadow:0 0 0 3px var(--blue-50)}
+.status-line{font-size:12.5px;color:var(--ink-2);margin-top:12px}
+.status-line b{color:var(--blue-600)}
+.streak-box{
+  display:flex;justify-content:space-between;align-items:center;margin-top:14px;
+  background:var(--blue-50);border-radius:10px;padding:10px 14px;
+}
+.streak-box .lbl{font-size:12px;color:var(--ink-2)}
+.streak-box .val{font-size:19px;font-weight:800;color:var(--blue-600)}
+.streak-box .val small{font-size:11px;color:var(--ink-3);font-weight:600}
+.tl{list-style:none;display:flex;flex-direction:column;gap:2px}
+.tl li{display:flex;align-items:center;gap:10px;font-size:13px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.tl li:last-child{border-bottom:none}
+.tl .t{color:var(--ink-3);font-size:12px;width:42px;flex-shrink:0}
+.tl .v{margin-left:auto;font-weight:700}
+.tl .v.word{color:var(--blue-600)}
+.tl .v.water{color:var(--cyan)}
+.done-badge{font-size:11px;background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:20px;font-weight:700}
+.quote{margin-top:12px;background:var(--blue-50);border-radius:10px;padding:12px 14px}
+.quote .en{font-size:13px;color:var(--blue-700);font-style:italic;line-height:1.6}
+.quote .zh{font-size:12px;color:var(--ink-2);margin-top:4px}
+
+/* ---------- 日程 ---------- */
+.plan-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.plan-row:last-of-type{border-bottom:none}
+.plan-time{font-size:11.5px;color:var(--ink-3);width:88px;flex-shrink:0;letter-spacing:-.2px}
+.plan-box{
+  width:19px;height:19px;border:2px solid var(--blue-400);border-radius:6px;cursor:pointer;
+  flex-shrink:0;display:grid;place-items:center;transition:.16s;background:#fff;
+}
+.plan-box.on{background:var(--blue-600);border-color:var(--blue-600)}
+.plan-box.on::after{content:"✓";color:#fff;font-size:12px;font-weight:800}
+.plan-text{flex:1;font-size:13.5px}
+.plan-row.done .plan-text{color:var(--ink-3);text-decoration:line-through}
+.plan-del{border:none;background:none;color:var(--ink-3);cursor:pointer;font-size:15px;padding:2px 6px;border-radius:6px}
+.plan-del:hover{background:#fff1f2;color:#be123c}
+.add-row{display:flex;gap:8px;margin-top:12px}
+.add-row input{
+  border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:13px;
+  font-family:inherit;outline:none;transition:.16s;min-width:0;
+}
+.add-row input:focus{border-color:var(--blue-500);box-shadow:0 0 0 3px var(--blue-50)}
+.add-row input.t{width:74px;flex-shrink:0}
+.add-row input.x{flex:1}
+textarea{
+  width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:13.5px;
+  font-family:inherit;color:var(--ink);outline:none;resize:vertical;min-height:76px;line-height:1.7;transition:.16s;
+}
+textarea:focus{border-color:var(--blue-500);box-shadow:0 0 0 3px var(--blue-50)}
+.prio-bar{
+  font-size:11.5px;color:var(--blue-700);background:var(--blue-50);
+  border:1px solid var(--blue-100,#dbeafe);border-radius:9px;padding:7px 11px;margin-bottom:10px;
+}
+.tpl-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tpl-box{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}
+.tpl-days{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tpl-day{
+  padding:5px 11px;border:1px solid var(--line);background:#fff;border-radius:8px;
+  font-size:12px;color:var(--ink-2);cursor:pointer;transition:.15s;
+}
+.tpl-day:hover{border-color:var(--blue-400);color:var(--blue-600)}
+.tpl-day.on{background:var(--blue-600);border-color:var(--blue-600);color:#fff;font-weight:600}
+.tpl-hint{font-size:11.5px;color:var(--ink-3);margin-top:8px;line-height:1.6}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.link-bar{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
+
+/* ---------- 目标安排 ---------- */
+.goal-bar{height:6px;border-radius:99px;background:#eef2f7;overflow:hidden;margin:2px 0 10px}
+.goal-bar span{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--blue-500),var(--blue-600));transition:width .35s ease}
+.goal-due{font-size:11px;color:var(--blue-700);background:var(--blue-50);border-radius:20px;padding:2px 8px;flex-shrink:0}
+.goal-row .plan-text{line-height:1.5}
+.goal-row .goal-x{font-size:10.5px;color:var(--ink-3);flex-shrink:0}
+
+/* ---------- toast ---------- */
+.toast{
+  position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+  background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;
+  z-index:999;box-shadow:0 8px 24px rgba(15,23,42,.25);display:none;max-width:82vw;text-align:center;
+}
+@media(min-width:769px){.toast{bottom:34px}}
+
+/* ---------- 安装引导 ---------- */
+.install-bar{
+  position:fixed;left:12px;right:12px;bottom:calc(72px + env(safe-area-inset-bottom,0px));
+  background:#fff;border:1px solid var(--blue-100);border-radius:13px;padding:11px 13px;
+  display:none;align-items:center;gap:10px;box-shadow:0 8px 26px rgba(37,99,235,.18);z-index:50;
+}
+.install-bar .ib-ico{font-size:22px;flex-shrink:0}
+.install-bar .ib-txt{flex:1;font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+.install-bar .ib-txt b{display:block;font-size:13.5px;color:var(--ink)}
+.install-bar .ib-btn{
+  border:none;background:var(--blue-600);color:#fff;padding:7px 13px;border-radius:8px;
+  font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;flex-shrink:0;
+}
+.install-bar .ib-close{border:none;background:none;color:var(--ink-3);cursor:pointer;font-size:15px;padding:2px 4px}
+.install-modal{
+  position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:100;
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.install-modal.show{display:flex;animation:fadeUp .22s ease}
+.install-modal .im-card{background:#fff;border-radius:16px;padding:24px 20px;max-width:340px;width:100%;text-align:center}
+.install-modal .im-ico{font-size:42px;margin-bottom:8px}
+.install-modal h3{font-size:16px;margin-bottom:6px}
+.install-modal p{font-size:13px;color:var(--ink-2);margin-bottom:14px}
+.im-step{display:flex;gap:9px;text-align:left;font-size:13px;color:var(--ink-2);margin-bottom:9px;align-items:flex-start;line-height:1.5}
+.im-step .n{
+  width:20px;height:20px;border-radius:50%;background:var(--blue-600);color:#fff;flex-shrink:0;
+  display:grid;place-items:center;font-size:11px;font-weight:700;margin-top:2px;
+}
+.im-done{
+  width:100%;margin-top:8px;border:none;background:var(--blue-600);color:#fff;
+  padding:11px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+
+/* ---------- 移动端：底部 Tab ---------- */
+@media(max-width:768px){
+  .app{flex-direction:column}
+  .sidebar{
+    order:2;width:100%;flex-direction:row;align-items:stretch;gap:2px;
+    padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));
+    border-top:1px solid var(--line);border-right:none;background:rgba(255,255,255,.96);
+    backdrop-filter:blur(10px);
+  }
+  .brand,.side-date,.nav-label,.sidebar-footer{display:none}
+  .nav-item{
+    flex:1;flex-direction:column;gap:2px;padding:6px 2px;justify-content:center;
+    border-radius:10px;position:relative;min-height:52px;text-align:center;
+  }
+  .nav-item .ico{font-size:19px;width:auto}
+  .nav-item .txt{font-size:10.5px;display:block;flex:none;white-space:nowrap}
+  .nav-item .badge{
+    position:absolute;top:3px;right:calc(50% - 24px);font-size:9.5px;padding:0 5px;line-height:15px;
+  }
+  .nav-item.active .badge{background:#fff;color:var(--blue-600)}
+  .main{order:1;flex:1;min-height:0}
+  .topbar{height:58px;padding:0 15px}
+  .topbar h1{font-size:17px}
+  .tb-sub{font-size:11px}
+  .icon-btn{width:36px;height:36px;border-radius:11px}
+  .content{padding:14px 12px}
+  .card{padding:14px}
+  .hero-card{padding:20px 14px}
+  .ring{width:142px;height:142px}
+  .ring-inner{width:114px;height:114px}
+  .ring-num{font-size:34px}
+}
+
+/* 单词闯关（内嵌 iframe） */
+#view-quiz{padding:0}
+.quiz-wrap{
+  height:calc(100vh - 118px); height:calc(100dvh - 118px);
+  min-height:440px; border-radius:var(--radius); overflow:hidden;
+  border:1px solid var(--line); background:var(--card); box-shadow:var(--shadow);
+}
+.quiz-wrap iframe{width:100%; height:100%; border:0; display:block}
+@media(max-width:720px){
+  .quiz-wrap{height:calc(100vh - 168px); height:calc(100dvh - 168px)}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">🏢</div>
+      <div>
+        <div class="brand-name">一人公司工作台</div>
+        <div class="brand-sub">ONE-PERSON CO.</div>
+      </div>
+    </div>
+    <div class="side-date" id="sideDate"></div>
+
+    <div class="nav-label">日程</div>
+    <div class="nav-item active" data-view="plan">
+      <span class="ico">📅</span><span class="txt">日程安排</span><span class="badge" id="planBadge">0/0</span>
+    </div>
+
+    <div class="nav-label">情报</div>
+    <div class="nav-item" data-view="ai">
+      <span class="ico">🤖</span><span class="txt">AI 情报</span><span class="badge" id="aiBadge">0</span>
+    </div>
+    <div class="nav-item" data-view="tech">
+      <span class="ico">💻</span><span class="txt">计算机情报</span><span class="badge" id="techBadge">0</span>
+    </div>
+
+    <div class="nav-label">打卡</div>
+    <div class="nav-item" data-view="word">
+      <span class="ico">📚</span><span class="txt">英语打卡</span><span class="badge" id="wordBadge">0/30</span>
+    </div>
+    <div class="nav-item" data-view="quiz">
+      <span class="ico">🎮</span><span class="txt">单词闯关</span>
+    </div>
+    <div class="nav-item" data-view="water">
+      <span class="ico">💧</span><span class="txt">喝水打卡</span><span class="badge" id="waterBadge">0ml</span>
+    </div>
+
+    <div class="sidebar-footer">数据本地存储 · 隐私安全</div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="tb-left">
+        <h1 id="viewTitle">日程安排</h1>
+        <span class="tb-sub" id="dataTime"></span>
+      </div>
+      <button class="icon-btn" id="refreshBtn" onclick="refreshData()" aria-label="刷新数据" title="刷新数据">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/>
+        </svg>
+      </button>
+    </header>
+    <div class="content">
+
+      <!-- 日程 -->
+      <section class="view active" id="view-plan">
+        <div class="checkin-wrap">
+          <div class="card">
+            <div class="card-title">📋 今日安排 <span class="hint" id="planDateTxt"></span></div>
+            <div class="prio-bar">🎯 优先级：四级（12月考试）＞ 课内 ＞ C语言 ＞ 深入浅出计组</div>
+            <div id="planList"></div>
+            <div class="add-row">
+              <input class="t" id="planTime" placeholder="09:00" maxlength="5">
+              <input class="x" id="planText" placeholder="添加一项安排，支持一次粘贴多行">
+              <button class="btn btn-primary" onclick="addPlan()">添加</button>
+            </div>
+            <div class="tpl-bar">
+              <button class="btn" onclick="applyTpl()">⤵ 套用今日模板</button>
+              <button class="btn" onclick="toggleTpl()">✎ 编辑每周固定安排</button>
+            </div>
+            <div class="tpl-box" id="tplBox" style="display:none">
+              <div class="tpl-days" id="tplDays"></div>
+              <textarea id="tplText" rows="7" placeholder="每行一条：09:00 事项内容"></textarea>
+              <div class="tpl-bar" style="margin-top:10px">
+                <button class="btn btn-primary" onclick="pasteTpl()">📥 粘贴表格内容</button>
+              </div>
+              <div class="tpl-hint">每行一条，格式「时间 内容」（时间可省略）。按周一～周日分别设置，每天打开会自动带入当天那一套。<br>在飞书里复制好日程，点上面按钮一次性粘进来。</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🎯 目标安排 <span class="hint" id="goalHint">0/0</span></div>
+            <div class="goal-bar"><span id="goalBar" style="width:0%"></span></div>
+            <div id="goalList"></div>
+            <div class="add-row">
+              <input class="t" id="goalDue" placeholder="期限" maxlength="10">
+              <input class="x" id="goalText" placeholder="写下一个目标，回车添加">
+              <button class="btn btn-primary" onclick="addGoal()">添加</button>
+            </div>
+            <div class="tpl-bar">
+              <button class="quick-chip" onclick="clearDoneGoals()">🧹 清除已完成</button>
+            </div>
+            <div class="tpl-hint">勾选 = 当日打卡，进度自动累计；期限可写「本周」「11-30」或留空。</div>
+          </div>
+        </div>
+      </section>
+      <!-- AI 情报 -->
+      <section class="view" id="view-ai">
+        <div class="section-head-title">🤖 AI 情报 · 热榜 + 基础</div>
+        <div class="news-list" id="aiList"></div>
+      </section>
+
+      <!-- 计算机情报 -->
+      <section class="view" id="view-tech">
+        <div class="section-head-title">💻 计算机情报 · 热榜 + 基础</div>
+        <div class="news-list" id="techList"></div>
+      </section>
+
+      <!-- 英语打卡 -->
+      <section class="view" id="view-word">
+        <div class="checkin-wrap">
+          <div class="card hero-card">
+            <div class="ring" id="wordRing" style="--pct:0%">
+              <div class="ring-inner">
+                <div class="ring-num num" id="wordNum">0</div>
+                <div class="ring-unit">今日 / 30 词</div>
+              </div>
+            </div>
+            <div class="input-row">
+              <input type="number" id="wordInput" placeholder="输入个数" min="1" max="999" inputmode="numeric">
+              <button class="btn btn-primary" onclick="addWordsInput()">记好了</button>
+            </div>
+            <div class="quick-row">
+              <button class="quick-chip" onclick="addWords(5)">+5</button>
+              <button class="quick-chip" onclick="addWords(10)">+10</button>
+              <button class="quick-chip" onclick="addWords(20)">+20</button>
+              <button class="quick-chip" onclick="addWords(30)">完成 30</button>
+            </div>
+            <div class="streak-box">
+              <span class="lbl">连续打卡</span>
+              <span class="val"><span class="num" id="wordStreak">0</span> <small>天</small></span>
+            </div>
+            <div class="status-line" id="wordStatus"></div>
+            <button class="btn btn-primary" style="width:100%;margin-top:12px" onclick="switchView('quiz')">🎮 单词闯关 · 英译汉 / 汉译英</button>
+            <button class="quick-chip" style="margin-top:8px" onclick="undoWord()">↩ 撤销上一次</button>
+          </div>
+          <div class="card">
+            <div class="card-title">📝 今日背词记录 <span class="done-badge" id="wordDone" style="display:none">今日达标 ✓</span></div>
+            <ul class="tl" id="wordTimeline"></ul>
+            <div class="quote" id="wordQuote"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 喝水打卡 -->
+      <section class="view" id="view-water">
+        <div class="checkin-wrap">
+          <div class="card hero-card">
+            <div class="ring" id="waterRing" style="--pct:0%;--ring-c:var(--cyan)">
+              <div class="ring-inner">
+                <div class="ring-num num" id="waterNum">0</div>
+                <div class="ring-unit">今日 / 2300 ml</div>
+              </div>
+            </div>
+            <div class="input-row">
+              <input type="number" id="waterInput" placeholder="自定义 ml" min="1" max="2000" inputmode="numeric">
+              <button class="btn btn-primary" onclick="drinkInput()">喝了</button>
+            </div>
+            <div class="quick-row">
+              <button class="quick-chip" onclick="drink(100)">+100ml</button>
+              <button class="quick-chip" onclick="drink(200)">+200ml</button>
+              <button class="quick-chip" onclick="drink(250)">+250ml</button>
+              <button class="quick-chip" onclick="drink(330)">+330ml</button>
+              <button class="quick-chip" onclick="drink(500)">+500ml</button>
+            </div>
+            <div class="status-line" id="waterStatus"></div>
+            <button class="quick-chip" style="margin-top:12px" onclick="drink(-1)">↩ 撤销上一次</button>
+          </div>
+          <div class="card">
+            <div class="card-title">📝 今日喝水记录 <span class="done-badge" id="waterDone" style="display:none">已达 2300ml ✓</span></div>
+            <ul class="tl" id="waterTimeline"></ul>
+            <div class="status-line" id="nextRemind"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 单词闯关 -->
+      <section class="view" id="view-quiz">
+        <div class="quiz-wrap">
+          <iframe id="quizFrame" src="word-quiz.html" title="单词闯关"></iframe>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="data.js"></script>
+<script>
+/* ================= 工具 ================= */
+function relTime(ts){
+  if(!ts) return '';
+  const diff = Math.floor(Date.now()/1000 - ts);
+  if(diff < 60) return '刚刚';
+  if(diff < 3600) return Math.floor(diff/60)+' 分钟前';
+  if(diff < 86400) return Math.floor(diff/3600)+' 小时前';
+  const d = new Date(ts*1000);
+  return (d.getMonth()+1)+'月'+d.getDate()+'日';
+}
+function esc(s){return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function todayKey(){return new Date().toDateString()}
+function pad(n){return String(n).padStart(2,'0')}
+function fmtDate(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+function toast(msg, type){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  clearTimeout(t._h); t._h = setTimeout(()=>t.style.display='none', 2600);
+}
+
+/* ================= 资讯数据 ================= */
+let HOT = window.HOT_DATA || null;
+
+/* 远端最新数据源（GitHub Actions 每天 08:00 生成并提交，CDN 兜底同步） */
+const RAW = 'https://raw.githubusercontent.com/cp6661/opc-workbench/main/data.js';
+/* 实时代理（无缓存）优先；jsDelivr 会缓存最长 24h，放最后兜底 */
+const REMOTE_SOURCES = [
+  'https://gh-proxy.com/' + RAW,
+  'https://ghfast.top/' + RAW,
+  'https://gh.idayer.com/' + RAW,
+  'https://ghproxy.net/' + RAW,
+  RAW,
+  'https://cp6661.github.io/opc-workbench/data.js',
+  'https://fastly.jsdelivr.net/gh/cp6661/opc-workbench@main/data.js'
+];
+function parseData(txt){
+  const w = {};
+  (new Function('window', txt))(w);
+  return w.HOT_DATA || null;
+}
+function applyData(d, srcLabel){
+  HOT = d;
+  window.HOT_DATA = d;
+  renderAllNews();
+  lastSrcLabel = srcLabel || '本地快照';
+  updateDataTime();
+}
+let lastSrcLabel = '本地快照';
+function updateDataTime(){
+  const el = document.getElementById('dataTime');
+  if(!el) return;
+  el.textContent = HOT
+    ? '更新于 ' + HOT.updateTime + ' · 来源 ' + lastSrcLabel
+    : '未加载到数据';
+}
+/* 带超时的文本拉取（镜像不可达时快速跳过下一个） */
+function fetchWithTimeout(url, ms){
+  ms = ms || 8000;
+  return new Promise((resolve, reject) => {
+    const ctl = ('AbortController' in window) ? new AbortController() : null;
+    const timer = setTimeout(() => { if(ctl) ctl.abort(); reject(new Error('timeout')); }, ms);
+    fetch(url, {cache:'no-store', signal: ctl ? ctl.signal : undefined})
+      .then(r => r.ok ? r.text() : Promise.reject(new Error('HTTP ' + r.status)))
+      .then(t => { clearTimeout(timer); resolve(t); })
+      .catch(e => { clearTimeout(timer); reject(e); });
+  });
+}
+function hostOf(u){
+  try{ return new URL(u).hostname.replace(/^www\./,''); }catch(e){ return u.slice(0,24); }
+}
+/* 并发请求所有数据源，谁快用谁；持续取 updateTs 最大的那份，避免拿到代理缓存的旧数据 */
+function autoUpdate(silent){
+  const total = REMOTE_SOURCES.length;
+  let finished = 0, okCount = 0, applied = false;
+  let bestTs = (HOT && HOT.updateTs) || 0;
+
+  REMOTE_SOURCES.forEach(function(u){
+    const host = hostOf(u);
+    const url = u + (u.indexOf('?') >= 0 ? '&' : '?') + 't=' + Date.now();
+    fetchWithTimeout(url, 8000)
+      .then(function(txt){
+        const d = parseData(txt);
+        if(!d) throw new Error('bad data');
+        okCount++;
+        if((d.updateTs || 0) > bestTs){
+          bestTs = d.updateTs;
+          applyData(d, host);
+          applied = true;
+          if(!silent) toast('✅ 已更新 · ' + d.updateTime.slice(5, 16), 0);
+        } else if(!applied){
+          lastSrcLabel = host;
+          updateDataTime();
+        }
+      })
+      .catch(function(){})
+      .then(function(){
+        finished++;
+        if(finished < total) return;
+        if(okCount === 0){
+          lastSrcLabel = '本地快照';
+          updateDataTime();
+          if(!silent) toast('❌ 数据源不可达，显示的是本地快照', 0);
+        } else if(!applied && !silent){
+          toast('✅ 已是最新内容（' + HOT.date + '）', 0);
+        }
+      });
+  });
+}
+function refreshData(){
+  toast('🔄 正在获取最新内容…', 0);
+  const b = document.getElementById('refreshBtn');
+  if(b){ b.classList.add('spin'); setTimeout(()=>b.classList.remove('spin'), 900); }
+  autoUpdate(false);
+}
+
+function renderNews(listId, items, tagClass, tagText){
+  const el = document.getElementById(listId);
+  if(!items || !items.length){
+    el.innerHTML = '<div class="empty"><div class="big">📭</div>暂无内容</div>';
+    return;
+  }
+  el.innerHTML = items.map(x=>{
+    const isHot = !!x.url;
+    const inner = '<div class="news-top">' +
+        '<span class="tag ' + tagClass + '">' + tagText + '</span>' +
+        '<span class="tag ' + (isHot ? 'tag-hot' : 'tag-base') + '">' + (isHot ? '🔥 热榜' : '📘 基础') + '</span>' +
+        '<span class="news-title">' + esc(x.title) + '</span>' +
+      '</div>' +
+      (x.summary ? '<div class="news-summary">' + esc(x.summary) + '</div>' : '') +
+      '<div class="news-meta"><span class="src-badge">' + esc(x.source) + '</span>' +
+      (x.ts ? '<span>' + relTime(x.ts) + '</span>' : '') + '</div>';
+    return x.url
+      ? '<a class="news-item" href="' + esc(x.url) + '" target="_blank" rel="noopener">' + inner + '</a>'
+      : '<div class="news-item">' + inner + '</div>';
+  }).join('');
+}
+function renderAllNews(){
+  if(!HOT){
+    document.getElementById('aiList').innerHTML =
+      document.getElementById('techList').innerHTML =
+      '<div class="empty"><div class="big">📭</div>未加载到 data.js</div>';
+    return;
+  }
+  renderNews('aiList', HOT.ai_news, 'tag-ai', 'AI');
+  renderNews('techList', HOT.tech_news, 'tag-tech', '计算机');
+  document.getElementById('aiBadge').textContent = HOT.ai_news.length;
+  document.getElementById('techBadge').textContent = HOT.tech_news.length;
+  updateDataTime();
+}
+
+/* ================= 日程：每日安排（全部在工作台内维护，不依赖外部表格） ================= */
+const planKey = () => 'opc_plan_' + todayKey();
+const TPL_KEY = 'opc_week_tpl';
+const WEEK_CN = ['一','二','三','四','五','六','日'];
+/* 默认每周固定安排（来源：大一一周每日安排表 · 西财计算机大一 10 月版） */
+const DEFAULT_TPLS = {
+  0: '08:00-08:30 起床+早餐 · 四级单词20个\n' +
+     '08:30-10:10 四级阅读1篇\n' +
+     '10:20-12:00 高数作业+错题\n' +
+     '12:00-13:00 午饭+午休\n' +
+     '13:00-15:35 四级听力精听\n' +
+     '15:45-17:25 跑操练 @体育场馆\n' +
+     '17:25-18:30 晚饭+散步\n' +
+     '18:30-20:30 高数作业+错题整理\n' +
+     '20:30-22:30 四级阅读+生词整理 → C语言基础\n' +
+     '22:30-23:30 洗漱+睡觉',
+  1: '08:00-08:30 起床+早餐 · 四级单词20个\n' +
+     '08:30-10:10 高数预习+整理\n' +
+     '10:20-12:00 高等数学I @Grid楼H203\n' +
+     '12:00-13:00 午饭+午休30min\n' +
+     '13:00-15:35 高数练习1套\n' +
+     '15:45-17:25 C语言课后2题\n' +
+     '17:25-18:30 晚饭+散步\n' +
+     '18:30-20:30 四级听力精听+精读\n' +
+     '20:30-22:30 计组阅读+笔记 → C语言习题\n' +
+     '22:30-23:30 洗漱+睡觉',
+  2: '08:00-08:30 起床+早餐 · 四级单词20个\n' +
+     '08:30-10:10 综合英语Ⅲ @综合楼B204\n' +
+     '10:20-12:00 微观英语演游记\n' +
+     '12:00-13:00 午饭+午休\n' +
+     '13:00-15:35 C语言动手敲代码\n' +
+     '15:45-17:25 大学生心理健康 @Grid楼B213\n' +
+     '17:25-18:30 晚饭+散步\n' +
+     '18:30-20:30 C语言上机敲代码\n' +
+     '20:30-22:30 四级阅读专项 → 计组预习\n' +
+     '22:30-23:30 洗漱+睡觉',
+  3: '08:00-08:30 起床+早餐 · 四级单词20个\n' +
+     '08:30-10:10 四级单词复习+精听\n' +
+     '10:20-12:00 英语国家与文化鉴赏 @学生楼B201\n' +
+     '12:00-13:00 午饭+午休\n' +
+     '13:00-15:35 高数学习I @Grid楼H203\n' +
+     '15:45-17:25 C语言综合复习\n' +
+     '17:25-18:30 晚饭+散步\n' +
+     '18:30-20:30 周四空课 @计组楼D201（课名待补）\n' +
+     '20:30-22:30 四级词汇周边+C复习\n' +
+     '22:30-23:30 洗漱+睡觉',
+  4: '08:00-08:30 起床+早餐 · 四级单词20个\n' +
+     '08:30-10:10 信箱准备\n' +
+     '10:20-12:00 勤工俭学值理\n' +
+     '12:00-13:00 午饭+午休\n' +
+     '13:00-15:35 勤工俭学值班\n' +
+     '15:45-17:25 勤工俭学值班\n' +
+     '17:25-18:30 晚饭\n' +
+     '18:30-20:30 赶本周作业（高数优先）\n' +
+     '20:30-22:30 四级本周生词复盘（之后自由休息）\n' +
+     '22:30-23:30 洗漱+睡觉',
+  5: '08:30 起床+早餐 · 早单词30个\n' +
+     '08:30-10:10 高数集中刷题\n' +
+     '10:20-12:00 高数错题整理\n' +
+     '12:00-13:00 午饭+午休\n' +
+     '13:00-15:35 四级真题限时模考\n' +
+     '15:45-17:25 整理生活 · 收纳复盘\n' +
+     '17:25-18:30 晚饭\n' +
+     '18:30-20:30 C语言系统练习+写代码\n' +
+     '20:30-22:30 计组精读1章\n' +
+     '22:30-23:30 24:00前睡觉',
+  6: '08:30 起床+早餐 · 早单词30个\n' +
+     '08:30-10:10 C语言本周复盘\n' +
+     '10:20-12:00 整理本周C语言错题\n' +
+     '12:00-13:00 午饭+午休\n' +
+     '13:00-15:35 四级听力专项\n' +
+     '15:45-17:25 计组：梳理本周概念\n' +
+     '17:25-18:30 晚饭\n' +
+     '18:30-20:30 背单词30min · 标注下周重点\n' +
+     '20:30-22:30 自由休息 · 不碰新难题\n' +
+     '22:30-23:30 洗漱+睡觉'
+};
+const DEFAULT_TPL = DEFAULT_TPLS[0];
+
+function weekdayIdx(){ return (new Date().getDay() + 6) % 7; }   // 0 = 周一
+function getTpl(){
+  try{ return JSON.parse(localStorage.getItem(TPL_KEY)) || {}; }catch(e){ return {}; }
+}
+function setTpl(o){ localStorage.setItem(TPL_KEY, JSON.stringify(o)); }
+function tplOf(i){ const t = getTpl(); return (t[i] == null ? (DEFAULT_TPLS[i] || DEFAULT_TPL) : String(t[i])); }
+function parseTpl(txt){
+  return (txt || '').split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{
+    const m = l.match(/^(\d{1,2}:\d{2})\s+(.*)$/);
+    return m ? {time:m[1], text:m[2]} : {time:'--:--', text:l};
+  });
+}
+/* 当天若没手写过安排，就自动套用「周几」的固定安排 */
+function tplPlan(){
+  return parseTpl(tplOf(weekdayIdx())).map((x,i)=>({id:1000+i, time:x.time, text:x.text, done:false}));
+}
+function getPlan(){
+  try{ return JSON.parse(localStorage.getItem(planKey())) || null; }
+  catch(e){ return null; }
+}
+function setPlan(a){ localStorage.setItem(planKey(), JSON.stringify(a)); }
+function curList(){ return getPlan() || tplPlan(); }
+function addPlan(){
+  const t = document.getElementById('planTime').value.trim();
+  const x = document.getElementById('planText').value.trim();
+  if(!x){ toast('请先填写安排内容', 0); return; }
+  const list = curList();
+  list.push({id:Date.now(), time:t || '--:--', text:x, done:false});
+  setPlan(list);
+  document.getElementById('planTime').value = '';
+  document.getElementById('planText').value = '';
+  renderPlan();
+}
+function togglePlan(id){
+  const list = curList();
+  const it = list.find(p=>String(p.id) === String(id));
+  if(it){ it.done = !it.done; setPlan(list); renderPlan(); }
+}
+function delPlan(id){
+  const list = curList().filter(p=>String(p.id) !== String(id));
+  setPlan(list); renderPlan();
+}
+function applyTpl(){
+  setPlan(tplPlan());
+  renderPlan();
+  toast('✅ 已套用「周' + WEEK_CN[weekdayIdx()] + '」的固定安排', 0);
+}
+function renderPlan(){
+  const list = curList();
+  const el = document.getElementById('planList');
+  el.innerHTML = list.length
+    ? list.map(p=>'<div class="plan-row' + (p.done?' done':'') + '">' +
+        '<span class="plan-time num">' + esc(p.time) + '</span>' +
+        '<span class="plan-box' + (p.done?' on':'') + '" onclick="togglePlan(' + p.id + ')"></span>' +
+        '<span class="plan-text">' + esc(p.text) + '</span>' +
+        '<button class="plan-del" onclick="delPlan(' + p.id + ')">✕</button>' +
+      '</div>').join('')
+    : '<div class="empty" style="padding:18px 0">今天还没有安排，加一条吧</div>';
+  const doneN = list.filter(p=>p.done).length;
+  document.getElementById('planBadge').textContent = doneN + '/' + list.length;
+}
+
+/* ---- 每周固定安排编辑面板 ---- */
+let curTplDay = 0;
+function toggleTpl(){
+  const box = document.getElementById('tplBox');
+  const opening = box.style.display === 'none';
+  box.style.display = opening ? 'block' : 'none';
+  if(opening){ curTplDay = weekdayIdx(); renderTplDays(); }
+}
+function renderTplDays(){
+  document.getElementById('tplDays').innerHTML = WEEK_CN.map((w,i)=>
+    '<span class="tpl-day' + (i===curTplDay?' on':'') + '" onclick="pickTplDay(' + i + ')">周' + w + '</span>'
+  ).join('');
+  document.getElementById('tplText').value = tplOf(curTplDay);
+}
+function pickTplDay(i){ saveTplText(); curTplDay = i; renderTplDays(); }
+/* ---- 从剪贴板批量导入（在飞书里复制后，一次粘进来） ---- */
+function parseLines(txt){
+  return (txt || '').split(/\r?\n/).map(s=>s.trim()).filter(Boolean)
+    .map(l=>{
+      const m = l.match(/^(\d{1,2}:\d{2})\s+(.*)$/);
+      return m ? {time:m[1], text:m[2]} : {time:'--:--', text:l};
+    });
+}
+/* 今日安排输入框：粘贴多行时一次性全部加入 */
+function pastePlan(e){
+  const txt = (e.clipboardData || window.clipboardData).getData('text') || '';
+  const items = parseLines(txt);
+  if(items.length < 2) return;             // 单行照普通粘贴处理
+  e.preventDefault();
+  const list = curList();
+  items.forEach((x,i)=>list.push({id:Date.now()+i, time:x.time, text:x.text, done:false}));
+  setPlan(list); renderPlan();
+  document.getElementById('planText').value = '';
+  toast('✅ 已导入 ' + items.length + ' 条安排', 0);
+}
+/* 每周模板：从剪贴板整段写入当前星期 */
+function pasteTpl(){
+  const ta = document.getElementById('tplText');
+  const apply = (txt)=>{
+    const items = parseLines(txt);
+    if(!items.length){ toast('剪贴板里没有内容', 0); return; }
+    ta.value = items.map(x=>(x.time === '--:--' ? '' : x.time + ' ') + x.text).join('\n');
+    saveTplText(); renderPlan();
+    toast('✅ 周' + WEEK_CN[curTplDay] + '模板已导入 ' + items.length + ' 条', 0);
+  };
+  if(navigator.clipboard && navigator.clipboard.readText){
+    navigator.clipboard.readText().then(apply, ()=>{
+      ta.focus(); toast('请长按输入框 → 粘贴', 0);
+    });
+  } else {
+    ta.focus(); toast('请长按输入框 → 粘贴', 0);
+  }
+}
+function saveTplText(){
+  const el = document.getElementById('tplText');
+  if(!el || curTplDay == null) return;
+  const t = getTpl();
+  t[curTplDay] = el.value;
+  setTpl(t);
+}
+
+/* ================= 日程：目标安排 + 打卡 ================= */
+const GOAL_KEY = 'opc_goals';
+function getGoals(){
+  try{ return JSON.parse(localStorage.getItem(GOAL_KEY)) || []; }
+  catch(e){ return []; }
+}
+function setGoals(a){ localStorage.setItem(GOAL_KEY, JSON.stringify(a)); }
+function addGoal(){
+  const tEl = document.getElementById('goalText');
+  const dEl = document.getElementById('goalDue');
+  const txt = tEl.value.trim();
+  if(!txt){ toast('请先填写目标内容', 0); return; }
+  const list = getGoals();
+  list.push({id:Date.now(), text:txt, due:dEl.value.trim(), done:false, doneAt:0});
+  setGoals(list);
+  tEl.value = ''; dEl.value = '';
+  renderGoals();
+  toast('🎯 目标已加入', 0);
+}
+function toggleGoal(id){
+  const list = getGoals();
+  const it = list.find(g=>String(g.id) === String(id));
+  if(!it) return;
+  it.done = !it.done;
+  it.doneAt = it.done ? Date.now() : 0;
+  setGoals(list);
+  renderGoals();
+  if(it.done) toast('✓ 打卡成功，继续加油', 0);
+}
+function delGoal(id){
+  setGoals(getGoals().filter(g=>String(g.id) !== String(id)));
+  renderGoals();
+}
+function clearDoneGoals(){
+  const list = getGoals();
+  const keep = list.filter(g=>!g.done);
+  if(keep.length === list.length){ toast('还没有已完成的目标', 0); return; }
+  setGoals(keep);
+  renderGoals();
+  toast('🧹 已清除 ' + (list.length - keep.length) + ' 个已完成目标', 0);
+}
+function goalWeekCount(list){
+  const d = new Date();
+  const monday = new Date(d); monday.setDate(d.getDate() - ((d.getDay()+6)%7));
+  monday.setHours(0,0,0,0);
+  return list.filter(g=>g.doneAt && g.doneAt >= monday.getTime()).length;
+}
+function renderGoals(){
+  const list = getGoals();
+  const el = document.getElementById('goalList');
+  el.innerHTML = list.length
+    ? list.map(g=>'<div class="plan-row goal-row' + (g.done?' done':'') + '">' +
+        '<span class="plan-box' + (g.done?' on':'') + '" onclick="toggleGoal(' + g.id + ')"></span>' +
+        '<span class="plan-text">' + esc(g.text) + '</span>' +
+        (g.due ? '<span class="goal-due">' + esc(g.due) + '</span>' : '') +
+        '<button class="plan-del" onclick="delGoal(' + g.id + ')">✕</button>' +
+      '</div>').join('')
+    : '<div class="empty" style="padding:14px 0">还没有目标，先写下这周最想完成的一件事</div>';
+  const doneN = list.filter(g=>g.done).length;
+  const pct = list.length ? Math.round(doneN / list.length * 100) : 0;
+  document.getElementById('goalBar').style.width = pct + '%';
+  document.getElementById('goalHint').textContent =
+    doneN + '/' + list.length + ' · 本周打卡 ' + goalWeekCount(list) + ' 次';
+}
+
+/* ================= 英语打卡 ================= */
+const WORD_GOAL = 30;
+const wordKey = () => 'opc_word_' + todayKey();
+const WORD_DONE_KEY = 'opc_word_done';
+function getWord(){
+  try{ return JSON.parse(localStorage.getItem(wordKey())) || {count:0, records:[]}; }
+  catch(e){ return {count:0, records:[]}; }
+}
+function setWord(d){ localStorage.setItem(wordKey(), JSON.stringify(d)); }
+const QUOTES = [
+  {en:"The secret of getting ahead is getting started.", zh:"领先的秘诀，就是立刻开始。"},
+  {en:"Little strokes fell great oaks.", zh:"水滴石穿，绳锯木断。"},
+  {en:"Practice makes perfect.", zh:"熟能生巧。"},
+  {en:"Where there is a will, there is a way.", zh:"有志者，事竟成。"},
+  {en:"Rome was not built in a day.", zh:"罗马不是一天建成的。"},
+  {en:"Knowledge is power.", zh:"知识就是力量。"},
+  {en:"A journey of a thousand miles begins with a single step.", zh:"千里之行，始于足下。"},
+  {en:"Success is the sum of small efforts, repeated day in and day out.", zh:"成功是日复一日小努力的总和。"}
+];
+function addWords(n){
+  if(!(n > 0)) return;
+  const d = getWord();
+  d.count += n;
+  d.records.push({time:Date.now(), n:n});
+  setWord(d);
+  renderWord();
+  toast('📚 已记 ' + n + ' 个单词，今日共 ' + d.count + ' 个', 0);
+}
+function addWordsInput(){
+  const el = document.getElementById('wordInput');
+  const n = parseInt(el.value, 10);
+  if(!(n > 0)){ toast('请输入大于 0 的数字', 0); return; }
+  addWords(n);
+  el.value = '';
+}
+function undoWord(){
+  const d = getWord();
+  if(!d.records.length){ toast('今天还没有记录', 0); return; }
+  const last = d.records.pop();
+  d.count = Math.max(0, d.count - last.n);
+  setWord(d); renderWord();
+  toast('↩ 已撤销 ' + last.n + ' 个单词', 0);
+}
+function computeStreak(){
+  const done = JSON.parse(localStorage.getItem(WORD_DONE_KEY) || '{}');
+  let streak = 0;
+  const d = new Date();
+  if(!done[fmtDate(d)]) d.setDate(d.getDate() - 1);
+  while(done[fmtDate(d)]){ streak++; d.setDate(d.getDate() - 1); }
+  return streak;
+}
+function renderWord(){
+  const d = getWord();
+  document.getElementById('wordNum').textContent = d.count;
+  document.getElementById('wordRing').style.setProperty('--pct', Math.min(100, d.count/WORD_GOAL*100) + '%');
+  document.getElementById('wordBadge').textContent = d.count + '/' + WORD_GOAL;
+  const done = d.count >= WORD_GOAL;
+  document.getElementById('wordDone').style.display = done ? '' : 'none';
+  document.getElementById('wordStatus').innerHTML = done
+    ? '<b>今日已达标 ✓</b> 坚持就是胜利'
+    : '今日还差 <b>' + (WORD_GOAL - d.count) + '</b> 个单词';
+  const dm = JSON.parse(localStorage.getItem(WORD_DONE_KEY) || '{}');
+  if(done && !dm[fmtDate(new Date())]){
+    dm[fmtDate(new Date())] = true;
+    localStorage.setItem(WORD_DONE_KEY, JSON.stringify(dm));
+  }
+  document.getElementById('wordStreak').textContent = computeStreak();
+  const tl = document.getElementById('wordTimeline');
+  tl.innerHTML = d.records.length
+    ? [...d.records].reverse().map(r=>{
+        const t = new Date(r.time);
+        return '<li><span class="t num">' + pad(t.getHours()) + ':' + pad(t.getMinutes()) +
+               '</span><span>背单词</span><span class="v word">+' + r.n + ' 个</span></li>';
+      }).join('')
+    : '<li><span class="t">—</span><span style="color:#94a3b8">今天还没背单词</span></li>';
+  const doy = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0).getTime())/86400000);
+  const q = QUOTES[doy % QUOTES.length];
+  document.getElementById('wordQuote').innerHTML =
+    '<div class="en">“' + esc(q.en) + '”</div><div class="zh">' + esc(q.zh) + '</div>';
+}
+
+/* ================= 喝水打卡 ================= */
+const WATER_GOAL = 2300;
+const REMIND_INTERVAL = 60*60*1000;
+const waterKey = () => 'opc_water_' + todayKey();
+function getWater(){
+  try{ return JSON.parse(localStorage.getItem(waterKey())) || {ml:0, records:[]}; }
+  catch(e){ return {ml:0, records:[]}; }
+}
+function setWater(d){ localStorage.setItem(waterKey(), JSON.stringify(d)); }
+let lastRemindTs = Number(localStorage.getItem('opc_last_remind') || 0);
+function drink(ml){
+  const d = getWater();
+  if(ml > 0){
+    d.ml += ml;
+    d.records.push({time:Date.now(), ml:ml});
+    setWater(d); renderWater();
+    toast('💧 已记录 ' + ml + 'ml，今日共 ' + d.ml + 'ml', 0);
+  } else if(ml < 0 && d.records.length){
+    const last = d.records.pop();
+    d.ml = Math.max(0, d.ml - last.ml);
+    setWater(d); renderWater();
+    toast('↩ 已撤销 ' + last.ml + 'ml', 0);
+  }
+}
+function drinkInput(){
+  const el = document.getElementById('waterInput');
+  const ml = parseInt(el.value, 10);
+  if(!(ml > 0)){ toast('请输入大于 0 的毫升数', 0); return; }
+  drink(ml);
+  el.value = '';
+}
+function renderWater(){
+  const d = getWater();
+  document.getElementById('waterNum').textContent = d.ml;
+  document.getElementById('waterRing').style.setProperty('--pct', Math.min(100, d.ml/WATER_GOAL*100) + '%');
+  document.getElementById('waterBadge').textContent = d.ml + 'ml';
+  const done = d.ml >= WATER_GOAL;
+  document.getElementById('waterDone').style.display = done ? '' : 'none';
+  document.getElementById('waterStatus').innerHTML = done
+    ? '<b>已达 2300ml ✓</b> 今日喝水目标完成'
+    : '今日还需 <b>' + (WATER_GOAL - d.ml) + 'ml</b> 水';
+  const tl = document.getElementById('waterTimeline');
+  tl.innerHTML = d.records.length
+    ? [...d.records].reverse().map(r=>{
+        const t = new Date(r.time);
+        return '<li><span class="t num">' + pad(t.getHours()) + ':' + pad(t.getMinutes()) +
+               '</span><span>喝水</span><span class="v water">+' + r.ml + 'ml</span></li>';
+      }).join('')
+    : '<li><span class="t">—</span><span style="color:#94a3b8">今天还没喝水</span></li>';
+  updateRemind();
+}
+function updateRemind(){
+  const el = document.getElementById('nextRemind');
+  const remain = Math.max(0, lastRemindTs + REMIND_INTERVAL - Date.now());
+  if(remain <= 0){
+    el.innerHTML = '🔔 该喝水了！点上面的按钮记录';
+  } else {
+    const m = Math.floor(remain/60000), s = Math.floor((remain%60000)/1000);
+    el.innerHTML = '⏱ 下次喝水提醒：<b>' + m + ' 分 ' + pad(s) + ' 秒</b> 后';
+  }
+}
+function checkRemind(){
+  const now = Date.now();
+  if(now - lastRemindTs >= REMIND_INTERVAL){
+    lastRemindTs = now;
+    localStorage.setItem('opc_last_remind', String(now));
+    toast('💧 起来喝水啦！', 0);
+    if('Notification' in window && Notification.permission === 'granted'){
+      new Notification('喝水提醒 💧', {body:'已经 1 小时啦，起来喝杯水吧', silent:true});
+    }
+  }
+  updateRemind();
+}
+
+/* ================= 导航 ================= */
+const VIEW_TITLES = {
+  plan:'日程安排', ai:'AI 情报', tech:'计算机情报', word:'英语打卡', quiz:'单词闯关', water:'喝水打卡'
+};
+function switchView(v){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active', n.dataset.view === v));
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.getElementById('viewTitle').textContent = VIEW_TITLES[v];
+  try{ localStorage.setItem('opc_last_view', v); }catch(e){}
+  if(v === 'ai' || v === 'tech') autoUpdate(true);
+}
+document.querySelectorAll('.nav-item').forEach(n=>{
+  n.addEventListener('click', ()=>switchView(n.dataset.view));
+});
+
+/* ================= 添加到桌面（PWA） =================
+   按用户要求不展示任何「装桌面」入口，但保留 beforeinstallprompt 能力，
+   浏览器自身的「安装应用 / 添加到主屏幕」菜单仍可正常使用。 */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt = e; });
+window.addEventListener('appinstalled', ()=>{ deferredPrompt = null; });
+
+/* ================= 初始化 ================= */
+(function init(){
+  const d = new Date();
+  const week = ['日','一','二','三','四','五','六'][d.getDay()];
+  document.getElementById('sideDate').textContent =
+    d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日 周' + week;
+  document.getElementById('planDateTxt').textContent = fmtDate(d);
+
+  document.getElementById('tplText').addEventListener('input', saveTplText);
+  document.getElementById('planText').addEventListener('paste', pastePlan);
+  document.getElementById('planText').addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter') addPlan();
+  });
+
+  renderPlan();
+  renderGoals();
+  document.getElementById('goalText').addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter') addGoal();
+  });
+  renderAllNews();
+  updateDataTime();
+  renderWord();
+  renderWater();
+
+  // 后台自动拉取云端最新内容
+  autoUpdate(true);
+
+  if('Notification' in window && Notification.permission === 'default') Notification.requestPermission();
+  setInterval(checkRemind, 1000);
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+  }
+  if(!isStandalone && isIOS && !localStorage.getItem('opc_install_dismiss')){
+    setTimeout(showInstallBar, 2500);
+  }
+  try{
+    const v = localStorage.getItem('opc_last_view');
+    if(v && VIEW_TITLES[v]) switchView(v);
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
