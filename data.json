@@ -1,6 +1,6 @@
 {
-  "updateTime": "2026-11-06 08:04:45",
-  "updateTs": 1793923485,
+  "updateTime": "2026-11-06 08:23:17",
+  "updateTs": 1793924597,
   "date": "2026-11-06",
   "total": 30,
   "ai_news": [
@@ -133,13 +133,6 @@
       "source": "掘金·技术热文"
     },
     {
-      "title": "CORS 到底在保护谁？90% 的前端理解错了跨域的本质",
-      "summary": "CORS本质是浏览器保护用户身份的安全机制，而非服务端防护；解析简单请求与预检流程，指出通配符及Origin反射配置的风险，并强调CORS无法防御CSRF等跨域写入攻击。",
-      "url": "https://juejin.cn/post/7703850980559503394",
-      "ts": 1793758388,
-      "source": "掘金·技术热文"
-    },
-    {
       "title": "Android 架构七条铁律：架构师真正设计的不是代码，而是秩序",
       "summary": "前段时间，和一个年轻开发者聊 Android 架构。 他谈起 MVVM。 谈起 MVI。 谈起 Clean Architecture。 也谈起各种设计模式。 他说了很多。 我听了很久。 然后问了一个问",
       "url": "https://juejin.cn/post/7704165786369409075",
@@ -147,24 +140,31 @@
       "source": "掘金·技术热文"
     },
     {
-      "title": "iPhone Duo 适配实战，Awaking 踩过的 8 个坑",
-      "summary": "记录 Awaking 适配 iPhone Duo 的过程。首页和展台为什么这样布局，滑杆、网格和导航改过哪些细节，还有一次旋转卡死的排查。附界面截图、局部配图和 Swift 代码。",
-      "url": "https://juejin.cn/post/7703516970495574051",
-      "ts": 1793683131,
+      "title": "CORS 到底在保护谁？90% 的前端理解错了跨域的本质",
+      "summary": "CORS本质是浏览器保护用户身份的安全机制，而非服务端防护；解析简单请求与预检流程，指出通配符及Origin反射配置的风险，并强调CORS无法防御CSRF等跨域写入攻击。",
+      "url": "https://juejin.cn/post/7703850980559503394",
+      "ts": 1793758388,
       "source": "掘金·技术热文"
     },
     {
       "title": "世界互联网大会乌镇峰会今天闭幕",
-      "summary": "热度 14485650",
+      "summary": "热度 14552076",
       "url": "https://www.toutiao.com/article/7704594856781365770",
-      "ts": 1793923485,
+      "ts": 1793924597,
       "source": "今日热榜"
     },
     {
       "title": "半导体指数ETF-HOLDRs收跌11.21%",
-      "summary": "热度 3947800",
-      "url": "https://www.toutiao.com/trending/7704720781464470042/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%2215%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227704720781464470042%22%2C%22hot_board_impr_id%22%3A%2220261106080445E676B134B46F94BE979A%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22%E5%8D%8A%E5%AF%BC%E4%BD%93%E6%8C%87%E6%95%B0ETF-HOLDRs%E6%94%B6%E8%B7%8C11.21%25%22%7D&rank=&style_id=40132&topic_id=7704720781464470042",
-      "ts": 1793923485,
+      "summary": "热度 3247007",
+      "url": "https://www.toutiao.com/trending/7704720781464470042/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%2215%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227704720781464470042%22%2C%22hot_board_impr_id%22%3A%2220261106082316D53D36C270C63B406D7D%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22%E5%8D%8A%E5%AF%BC%E4%BD%93%E6%8C%87%E6%95%B0ETF-HOLDRs%E6%94%B6%E8%B7%8C11.21%25%22%7D&rank=&style_id=40132&topic_id=7704720781464470042",
+      "ts": 1793924597,
+      "source": "今日热榜"
+    },
+    {
+      "title": "奥尔特曼改口：内存想装多少装多少",
+      "summary": "热度 1612416",
+      "url": "https://www.toutiao.com/trending/7704735345727770163/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%2213%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227704735345727770163%22%2C%22hot_board_impr_id%22%3A%2220261106082316D53D36C270C63B406D7D%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22%E5%A5%A5%E5%B0%94%E7%89%B9%E6%9B%BC%E6%94%B9%E5%8F%A3%EF%BC%9A%E5%86%85%E5%AD%98%E6%83%B3%E8%A3%85%E5%A4%9A%E5%B0%91%E8%A3%85%E5%A4%9A%E5%B0%91%22%7D&rank=&style_id=40132&topic_id=7704735345727770163",
+      "ts": 1793924597,
       "source": "今日热榜"
     },
     {
