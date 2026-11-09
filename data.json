@@ -1,6 +1,6 @@
 {
-  "updateTime": "2026-11-09 10:52:32",
-  "updateTs": 1794192752,
+  "updateTime": "2026-11-09 10:59:52",
+  "updateTs": 1794193192,
   "date": "2026-11-09",
   "total": 30,
   "ai_news": [
@@ -147,13 +147,6 @@
       "source": "掘金·技术热文"
     },
     {
-      "title": "ValidX vs 手写验证代码：开发效率对比实测",
-      "summary": "ValidX vs 手写验证代码：开发效率对比实测 📋 目录 引言 一、手写验证代码的真实面貌 1.1 一个典型项目的验证代码 1.2 手写验证的四种形态 1.3 手写验证的隐性成本 二、同一需求，两",
-      "url": "https://juejin.cn/post/7705598720079937536",
-      "ts": 1794188896,
-      "source": "掘金·技术热文"
-    },
-    {
       "title": "40亿个QQ号，限制1G内存，如何去重？",
       "summary": "40 亿个 unsigned int，如果直接用内存存储的话，需要： 4*4000000000 /1024/1024/1024 = 14.9G ，考虑到其中有一些重复的话，那 1G 的空间也基本上是不",
       "url": "https://juejin.cn/post/7704864028611706915",
@@ -162,9 +155,16 @@
     },
     {
       "title": "AI会替代程序员吗",
-      "summary": "热度 2229552",
-      "url": "https://www.toutiao.com/trending/7705940276891893801/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%220%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227705940276891893801%22%2C%22hot_board_impr_id%22%3A%222026110910523275B645E260569CC5229F%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22AI%E4%BC%9A%E6%9B%BF%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98%E5%90%97%22%7D&rank=&style_id=40132&topic_id=7705940276891893801",
-      "ts": 1794192752,
+      "summary": "热度 3689844",
+      "url": "https://www.toutiao.com/trending/7705940276891893801/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%220%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227705940276891893801%22%2C%22hot_board_impr_id%22%3A%2220261109105951950A8F529378DDD627A9%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22AI%E4%BC%9A%E6%9B%BF%E4%BB%A3%E7%A8%8B%E5%BA%8F%E5%91%98%E5%90%97%22%7D&rank=&style_id=40132&topic_id=7705940276891893801",
+      "ts": 1794193192,
+      "source": "今日热榜"
+    },
+    {
+      "title": "我国成功发射卫星互联网低轨29组卫星",
+      "summary": "热度 823315",
+      "url": "https://www.toutiao.com/trending/7705927986977030683/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%228%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227705927986977030683%22%2C%22hot_board_impr_id%22%3A%2220261109105951950A8F529378DDD627A9%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22%E6%88%91%E5%9B%BD%E6%88%90%E5%8A%9F%E5%8F%91%E5%B0%84%E5%8D%AB%E6%98%9F%E4%BA%92%E8%81%94%E7%BD%91%E4%BD%8E%E8%BD%A829%E7%BB%84%E5%8D%AB%E6%98%9F%22%7D&rank=&style_id=40132&topic_id=7705927986977030683",
+      "ts": 1794193192,
       "source": "今日热榜"
     },
     {
