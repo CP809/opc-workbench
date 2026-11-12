@@ -1,6 +1,6 @@
 {
-  "updateTime": "2026-11-12 12:00:30",
-  "updateTs": 1794456030,
+  "updateTime": "2026-11-12 12:20:58",
+  "updateTs": 1794457258,
   "date": "2026-11-12",
   "total": 30,
   "ai_news": [
@@ -54,10 +54,10 @@
       "source": "掘金·AI热文"
     },
     {
-      "title": "AI 编程时代，聊聊我的 Mac mini 双屏桌面",
-      "summary": "做前端开发，电脑上很少只开一个编辑器。页面要放在浏览器里看，样式不对就打开 DevTools，请求出了问题还得翻 Network，底下的终端也不能关。 现在又多了 AI。编辑器旁边开着对话面板，让它改",
-      "url": "https://juejin.cn/post/7706270077893263403",
-      "ts": 1794281380,
+      "title": "HarmonyOS ArkTS 把组件截图保存成 PNG 再调系统分享面板的做法",
+      "summary": "大家好啊，前段时间做了个 MBTI 梗化测试 app，想加个\"结果分享\"功能——用户测完 16 人格，截图给朋友看。听起来简单，真做下去发现要串三段 API：",
+      "url": "https://juejin.cn/post/7706345830358695971",
+      "ts": 1794358927,
       "source": "掘金·AI热文"
     },
     {
@@ -112,13 +112,6 @@
   ],
   "tech_news": [
     {
-      "title": "HarmonyOS ArkTS 把组件截图保存成 PNG 再调系统分享面板的做法",
-      "summary": "大家好啊，前段时间做了个 MBTI 梗化测试 app，想加个\"结果分享\"功能——用户测完 16 人格，截图给朋友看。听起来简单，真做下去发现要串三段 API：",
-      "url": "https://juejin.cn/post/7706345830358695971",
-      "ts": 1794358927,
-      "source": "掘金·技术热文"
-    },
-    {
       "title": "鸿蒙 ArkTS 独立开发者的项目结构 model / dao / viewmodel / page / common 的分层",
       "summary": "做了一堆鸿蒙 app 之后发现，项目第一天的目录结构 决定后 90 天开发顺不顺。走通几种结构后，总结出适合独立开发者的分层：model",
       "url": "https://juejin.cn/post/7705995320547278888",
@@ -165,6 +158,13 @@
       "summary": "在开发构建中，当 React 使用数组或可迭代对象渲染一组同级子节点时，如果直接生成的子节点没有提供 key，React 会在控制台输出： react的官方解释是这样说的： https://react",
       "url": "https://juejin.cn/post/7705976844432457766",
       "ts": 1794205776,
+      "source": "掘金·技术热文"
+    },
+    {
+      "title": "纯 Go 写的 JS 引擎，跑分超过了 C 语言的 QuickJS",
+      "summary": "moejs 是一个纯 Go 写的 JavaScript 运行时，2026 年 11 月 9 日发布 0.1.0，作者是 new-api 的维护者 Calcium-Ion。 它要解决的问题很小也很具体：",
+      "url": "https://juejin.cn/post/7706013328653680678",
+      "ts": 1794226523,
       "source": "掘金·技术热文"
     },
     {
