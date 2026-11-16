@@ -1,6 +1,6 @@
 {
-  "updateTime": "2026-11-16 10:56:31",
-  "updateTs": 1794797791,
+  "updateTime": "2026-11-16 11:12:07",
+  "updateTs": 1794798727,
   "date": "2026-11-16",
   "total": 30,
   "ai_news": [
@@ -161,11 +161,11 @@
       "source": "掘金·技术热文"
     },
     {
-      "title": "黄仁勋被裁第一天，就收到了橄榄枝",
-      "summary": "假如马斯克写信给黄仁勋…… Jensen, Jensen： So. You're free. 你自由了。 No condolences — you're not dead, and neither i",
-      "url": "https://juejin.cn/post/7707593859757539366",
-      "ts": 1794584428,
-      "source": "掘金·技术热文"
+      "title": "显卡价格疯涨年轻人挤进网吧包夜",
+      "summary": "热度 3391532",
+      "url": "https://www.toutiao.com/trending/7708595010224000554/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%2213%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227708595010224000554%22%2C%22hot_board_impr_id%22%3A%2220261116111206171F47AEF665B25884BA%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22%E6%98%BE%E5%8D%A1%E4%BB%B7%E6%A0%BC%E7%96%AF%E6%B6%A8%E5%B9%B4%E8%BD%BB%E4%BA%BA%E6%8C%A4%E8%BF%9B%E7%BD%91%E5%90%A7%E5%8C%85%E5%A4%9C%22%7D&rank=&style_id=40132&topic_id=7708595010224000554",
+      "ts": 1794798727,
+      "source": "今日热榜"
     },
     {
       "title": "MVCC",
