@@ -1,6 +1,6 @@
 {
-  "updateTime": "2026-11-22 11:21:10",
-  "updateTs": 1795317670,
+  "updateTime": "2026-11-22 11:30:21",
+  "updateTs": 1795318221,
   "date": "2026-11-22",
   "total": 30,
   "ai_news": [
@@ -148,16 +148,9 @@
     },
     {
       "title": "多啃苹果牙齿能变整齐？假的",
-      "summary": "热度 387637",
-      "url": "https://www.toutiao.com/trending/7710809097779760691/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%222%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227710809097779760691%22%2C%22hot_board_impr_id%22%3A%222026112211211066F48D22CA57FE18E6E7%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22%E5%A4%9A%E5%95%83%E8%8B%B9%E6%9E%9C%E7%89%99%E9%BD%BF%E8%83%BD%E5%8F%98%E6%95%B4%E9%BD%90%EF%BC%9F%E5%81%87%E7%9A%84%22%7D&rank=&style_id=40132&topic_id=7710809097779760691",
-      "ts": 1795317670,
-      "source": "今日热榜"
-    },
-    {
-      "title": "华为推出星芒试水AI手机",
-      "summary": "热度 35165",
-      "url": "https://www.toutiao.com/trending/7710656315885882906/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%2213%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227710656315885882906%22%2C%22hot_board_impr_id%22%3A%222026112211211066F48D22CA57FE18E6E7%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22%E5%8D%8E%E4%B8%BA%E6%8E%A8%E5%87%BA%E6%98%9F%E8%8A%92%E8%AF%95%E6%B0%B4AI%E6%89%8B%E6%9C%BA%22%7D&rank=&style_id=40132&topic_id=7710656315885882906",
-      "ts": 1795317670,
+      "summary": "热度 387946",
+      "url": "https://www.toutiao.com/trending/7710809097779760691/?category_name=topic_innerflow&event_type=hot_board&log_pb=%7B%22category_name%22%3A%22topic_innerflow%22%2C%22cluster_type%22%3A%222%22%2C%22enter_from%22%3A%22click_category%22%2C%22entrance_hotspot%22%3A%22outside%22%2C%22event_type%22%3A%22hot_board%22%2C%22hot_board_cluster_id%22%3A%227710809097779760691%22%2C%22hot_board_impr_id%22%3A%2220261122113020B66A39D44696C46FD168%22%2C%22jump_page%22%3A%22hot_board_page%22%2C%22location%22%3A%22news_hot_card%22%2C%22page_location%22%3A%22hot_board_page%22%2C%22source%22%3A%22trending_tab%22%2C%22style_id%22%3A%2240132%22%2C%22title%22%3A%22%E5%A4%9A%E5%95%83%E8%8B%B9%E6%9E%9C%E7%89%99%E9%BD%BF%E8%83%BD%E5%8F%98%E6%95%B4%E9%BD%90%EF%BC%9F%E5%81%87%E7%9A%84%22%7D&rank=&style_id=40132&topic_id=7710809097779760691",
+      "ts": 1795318221,
       "source": "今日热榜"
     },
     {
@@ -165,6 +158,13 @@
       "summary": "空值、日期、字符串：业务 SQL 里的函数先跑一遍 写业务 SQL 时，select * 很快就不够用了。列表字段要有显示名，金额要扣掉优惠，状态要转成中文，时间要格式化，备注里的空字符串要当成没有备",
       "url": "https://juejin.cn/post/7710058428483780623",
       "ts": 1795222163,
+      "source": "掘金·技术热文"
+    },
+    {
+      "title": "为了快 30 倍，我把构建工具换成了 Rust，结果团队差点连班都加不了",
+      "summary": "去年底，我力排众议，主导把团队的构建工具从 Webpack 迁到了 Rspack。 理由很充分：冷启动构建从 45 秒降到 2 秒，HMR 从秒级进入毫秒级，官方 benchmark 写着“约 20",
+      "url": "https://juejin.cn/post/7709679151841722409",
+      "ts": 1795068665,
       "source": "掘金·技术热文"
     },
     {
