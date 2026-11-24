@@ -1,6 +1,6 @@
 {
-  "updateTime": "2026-11-24 15:01:46",
-  "updateTs": 1795503706,
+  "updateTime": "2026-11-24 15:07:08",
+  "updateTs": 1795504028,
   "date": "2026-11-24",
   "total": 30,
   "ai_news": [
@@ -147,13 +147,6 @@
       "source": "掘金·技术热文"
     },
     {
-      "title": "很多人想把《GTA 6》移植到 PC 上，这 4 个 GitHub 项目在努力。",
-      "summary": "今年最备受瞩目的游戏应该是 《GTA 6》和《时之笛·重制版》 了吧。 11 月这两款大作一发售。 民间开发者就开始琢磨怎么让它们在电脑 PC 上玩了。 先是《塞尔达传说：时之笛》的 Switch 2",
-      "url": "https://juejin.cn/post/7710975177655451683",
-      "ts": 1795418100,
-      "source": "掘金·技术热文"
-    },
-    {
       "title": "workbuddy可以操控电脑！真的太省心了，AI博主利器啊",
       "summary": "前阵子 WorkBuddy 上新了「电脑操控」，说是能让 AI 自己点鼠标、开软件。我看到就来了兴趣——我平时写实操文章，最烦的就是这一步。 大家好，我是小虎。 我专门有个写作工具，很好用，每天写文章",
       "url": "https://juejin.cn/post/7710647322555760691",
@@ -161,10 +154,17 @@
       "source": "掘金·技术热文"
     },
     {
-      "title": "A2UI 1.0：Agent 画的 UI，6 端都能原生渲染了！",
-      "summary": "前言 近日，Google 正式发布了 A2UI 1.0——第一个稳定版的生成式 UI 开放协议 目录 A2UI 是什么？ 核心卖点有哪些？ 具体如何使用？ Android 开发者怎么接入？ 和现有方案",
-      "url": "https://juejin.cn/post/7711033019449262130",
-      "ts": 1795402368,
+      "title": "很多人想把《GTA 6》移植到 PC 上，这 4 个 GitHub 项目在努力。",
+      "summary": "今年最备受瞩目的游戏应该是 《GTA 6》和《时之笛·重制版》 了吧。 11 月这两款大作一发售。 民间开发者就开始琢磨怎么让它们在电脑 PC 上玩了。 先是《塞尔达传说：时之笛》的 Switch 2",
+      "url": "https://juejin.cn/post/7710975177655451683",
+      "ts": 1795418100,
+      "source": "掘金·技术热文"
+    },
+    {
+      "title": "Gemini 4 Neon+Antigravity，干活真猛啊。",
+      "summary": "Gemini 4 Neon+Antigravity 深度实测：/swarm 多 Agent 协作、SSH 远程开发、/run-workflow 编排、/grill-me 反问锁方案等六大高阶用法。",
+      "url": "https://juejin.cn/post/7710893312785465387",
+      "ts": 1795402215,
       "source": "掘金·技术热文"
     },
     {
